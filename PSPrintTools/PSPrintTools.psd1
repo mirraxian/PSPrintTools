@@ -68,6 +68,7 @@ DotNetFrameworkVersion = ''
 # Functions to export from this module
 FunctionsToExport = @(
     'Set-PrinterPageSize'
+    'Get-PrinterCapabilities'
 )
 
 # Cmdlets to export from this module

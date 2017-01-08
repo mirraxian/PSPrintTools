@@ -6,25 +6,28 @@ function Set-PrinterPageSize {
     Set-PrinterPageSize -PrinterName ExamplePrinter -PageSize NorthAmericaLetter
     .PARAMETER PrinterName
     The printer name or array of printers to change settings on
+    .PARAMETER PageSize
+    The paper size to set the PageSize to
     #>
-    
+
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
     param (
         [Parameter(Mandatory=$True,
         ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 0)]
-        [string]$PrinterName,
-        
+        [string[]]$PrinterName,
+
         [Parameter(Mandatory=$False,
         ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
-        Position = 0)]
-        [ValidateSet("NorthAmericaLegal","NorthAmerica11x17","NorthAmericaLetter")] 
+        Position = 1)]
+        [ValidateSet("NorthAmericaLegal","NorthAmerica11x17","NorthAmericaLetter","ISOA3","ISOA4","ISOA5","JISB4","JISB5","OtherMetricFolio","NorthAmericaNumber9Envelope","NorthAmericaNumber10Envelope","ISODLEnvelope","ISOC5Envelope","ISOC4Envelope","ISOC6Envelope","NorthAmericaMonarchEnvelope","NorthAmericaPersonalEnvelope","NorthAmericaTabloidExtra","ISOA6")]
         [String]$PageSize = "NorthAmericaLetter"
     )
 
     begin {
+        Add-Type -AssemblyName System.Printing
         write-verbose "Connecting to Print Server"
         #Set Perms to a variable to use when constructing instance of PrintServer
         $Permissions = [System.Printing.PrintSystemDesiredAccess]::AdministrateServer
