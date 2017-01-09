@@ -12,7 +12,7 @@
 RootModule = 'PSPrintTools.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.0'
+ModuleVersion = '0.1.1'
 
 # ID used to uniquely identify this module
 GUID = '12b82baf-d61a-4269-a32b-5f1372dc65e1'
@@ -39,7 +39,7 @@ PowerShellVersion = '3.0'
 # PowerShellHostVersion = ''
 
 # Minimum version of Microsoft .NET Framework required by this module
-DotNetFrameworkVersion = ''
+DotNetFrameworkVersion = '3.5'
 
 # Minimum version of the common language runtime (CLR) required by this module
 # CLRVersion = ''
@@ -69,6 +69,7 @@ DotNetFrameworkVersion = ''
 FunctionsToExport = @(
     'Set-PrinterPageSize'
     'Get-PrinterCapabilities'
+    'Get-PSPTPrinter'
 )
 
 # Cmdlets to export from this module
