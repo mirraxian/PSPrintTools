@@ -67,7 +67,7 @@ function Set-PSPTPrintConfiguration {
                 #Create New Queue object to assign properties to WITH permissions to change settings (getting queue from printserver won't have perms)
                 $NewQueue = New-Object System.Printing.PrintQueue -ArgumentList $PrintServer,$Printer,1,$QueuePerms
                 Try {
-                    if ($null -ne $PaperSize) {
+                    if ($PaperSize) {
                         #Check that Queue is capable of that page size, and set if so
                         $PageCaps = $NewQueue.GetPrintCapabilities().PageMediaSizeCapability
                         if ($null -ne $PageCaps) {
@@ -81,7 +81,7 @@ function Set-PSPTPrintConfiguration {
                             }
                         }
                     }
-                    if ($null -ne $Collate) {
+                    if ($Collate) {
                             #Check that Queue is capable of that collation, and set if so
                             $CollateCaps = $NewQueue.GetPrintCapabilities().CollationCapability
                             if ($null -ne $CollateCaps) {
@@ -95,7 +95,7 @@ function Set-PSPTPrintConfiguration {
                                 }
                             }
                     }
-                    if ($null -ne $Color) {
+                    if ($Color) {
                             #Check that Queue is capable of that output color, and set if so
                             $ColorCaps = $NewQueue.GetPrintCapabilities().OutputColorCapability
                             if ($null -ne $ColorCaps) {
@@ -109,7 +109,7 @@ function Set-PSPTPrintConfiguration {
                                 }
                             }
                     }
-                    if ($null -ne $DuplexingMode) {
+                    if ($DuplexingMode) {
                         #Check that Queue is capable of that output color, and set if so
                         $DuplexCaps = $NewQueue.GetPrintCapabilities().DuplexingCapability
                         if ($null -ne $DuplexCaps) {
@@ -132,7 +132,7 @@ function Set-PSPTPrintConfiguration {
                     if ($null -ne $NewQueue) {
                         $NewQueue.dispose()
                     }
-                    Write-Warning "Error setting Page size on $Printer"
+                    Write-Warning "Error configuring $Printer"
                 }
             }
         }
