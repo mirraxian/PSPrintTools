@@ -67,7 +67,7 @@ DotNetFrameworkVersion = '3.5'
 
 # Functions to export from this module
 FunctionsToExport = @(
-    'Set-PrinterPageSize'
+    'Set-PSPTPrintConfiguration'
     'Get-PrinterCapabilities'
     'Get-PSPTPrinter'
 )
