@@ -99,6 +99,7 @@ function Get-PSPTPrinter {
 	}
 
 	process {
+		write-verbose "Checking ComputerName"
 		if ($ComputerName) {
 			write-verbose "Starting Processing loop"
 			foreach ($computer in $ComputerName) {
@@ -118,28 +119,27 @@ function Get-PSPTPrinter {
 						$Type = "Unknown"
 					}
 					$CIMPrinter
-				} else {
-					#add filter if there's a printername
-					write-verbose "No ComputerName, skip Processing loop"
-					if ($PrinterName) {
-						$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
-					} else {
-						$CIMPrinter = Get-CimInstance -ClassName Win32_Printer | Select-Object $selectarray
-
-					}
-					if ($CIMPrinter.local -eq "True") {
-						$Type = "Local"
-					} elseif ($CIMPrinter.Network -eq "True") {
-						$Type = "Connection"
-					} else {
-						$Type = "Unknown"
-					}
-					$CIMPrinter
-				}
+				} 
 			}
+		} else {
+			#add filter if there's a printername
+			write-verbose "No ComputerName, skip Processing loop"
+			if ($PrinterName) {
+				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+			} else {
+				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer | Select-Object $selectarray
+			}
+			if ($CIMPrinter.local -eq "True") {
+				$Type = "Local"
+			} elseif ($CIMPrinter.Network -eq "True") {
+				$Type = "Connection"
+			} else {
+				$Type = "Unknown"
+			}
+			$CIMPrinter
 		}
 	}
 	end {
-			write-verbose "Ending Something"
+			write-verbose "Ending Something1"
 	}
 }
