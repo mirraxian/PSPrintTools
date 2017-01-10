@@ -6,6 +6,13 @@ function Get-PrinterCapabilities {
     Set-PrinterPageSize -PrinterName ExamplePrinter
     .PARAMETER PrinterName
     The printer name or array of printers to change settings on
+    .LINK
+    https://github.com/BenHimsel/PSPrintTools
+    .LINK
+    https://himsel.io
+    .NOTES
+    Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
+    Author: Ben Himsel
     #>
 
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
@@ -29,7 +36,7 @@ function Get-PrinterCapabilities {
     }
 
     process {
-        write-verbose "Starting Procesing loop"
+        write-verbose "Starting Processing loop"
         foreach ($Printer in $PrinterName) {
             Write-Verbose "Processing $Printer"
             if ($pscmdlet.ShouldProcess($Printer)) {

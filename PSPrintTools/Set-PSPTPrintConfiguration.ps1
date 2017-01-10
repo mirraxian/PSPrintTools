@@ -26,6 +26,13 @@ function Set-PSPTPrintConfiguration {
     Sets a value indicating what input bin (paper tray) to use.
     .PARAMETER OutputQuality
     Sets a value indicating the quality of output for the print job.
+    .LINK
+    https://github.com/BenHimsel/PSPrintTools
+    .LINK
+    https://himsel.io
+    .NOTES
+    Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
+    Author: Ben Himsel
     #>
 
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
@@ -119,7 +126,7 @@ function Set-PSPTPrintConfiguration {
     }
 
     process {
-        write-verbose "Starting Procesing loop"
+        write-verbose "Starting Processing loop"
         foreach ($Printer in $PrinterName) {
             Write-Verbose "Processing $Printer"
             if ($pscmdlet.ShouldProcess($Printer)) {
