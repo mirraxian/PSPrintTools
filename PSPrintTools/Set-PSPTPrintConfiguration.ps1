@@ -126,7 +126,7 @@ function Set-PSPTPrintConfiguration {
     }
 
     process {
-        write-verbose "Starting Procesing loop"
+        write-verbose "Starting Processing loop"
         foreach ($Printer in $PrinterName) {
             Write-Verbose "Processing $Printer"
             if ($pscmdlet.ShouldProcess($Printer)) {

@@ -25,94 +25,111 @@ function Get-PSPTPrinter {
 		ValueFromPipeline=$True,
 		ValueFromPipelineByPropertyName=$True,
 		Position = 0)]
-		[string[]]$ComputerName = "LocalHost",
+		[string[]]$ComputerName,
 
 		[Parameter(Mandatory=$False,
 		ValueFromPipeline=$True,
 		ValueFromPipelineByPropertyName=$True,
 		Position = 1)]
-		[string[]]$PrinterName = "LocalHost"
+		[string[]]$PrinterName
 	)
 
 	begin {
-	write-verbose "Beginning Something"
+		write-verbose "Initializing Helpers"
+		$sddlconverter = New-Object System.Management.ManagementClass Win32_SecurityDescriptorHelper
+		$selectarray = @(
+			"Name"
+			@{
+				Name="ComputerName"
+				Expression={$_.SystemName}
+			}
+			"ShareName"
+			"PortName"
+			"DriverName"
+			"Location"
+			"Comment"
+			@{
+				Name="SeparatorPageFile"
+				Expression={$_.SeparatorFile}
+			}
+			"PrintProcessor"
+			@{
+				Name="Datatype"
+				Expression={$_.PrintJobDataType}
+			}
+			"Shared"
+			"Published"
+			@{
+				Name="PermissionSDDL"
+				Expression={$sddlconverter.Win32SDToSDDL($_.getsecuritydescriptor().Descriptor).SDDL}
+			}
+			"KeepPrintedJobs"
+			"Priority"
+			@{
+				Name="DefaultJobPriority"
+				Expression={$_.DefaultPriority}
+			}
+			"StartTime"
+			"UntilTime"
+			@{	Name="PrinterStatus"
+				Expression={
+					switch ($_.PrinterStatus) {
+						1 {"Other"}
+						2 {"Unknown"}
+						3 {"Idle"}
+						4 {"Printing"}
+						5 {"Warming up"}
+						6 {"Stopped Printing"}
+						7 {"Offline"}
+						default {"Unknown"}
+					}
+				}
+			}
 
+		)
 	}
 
 	process {
-		write-verbose "Starting Procesing loop"
-		foreach ($computer in $ComputerName) {
-			Write-Verbose "Processing $computer"
-			if ($pscmdlet.ShouldProcess($computer)) {
-                $sddlconverter = New-Object System.Management.ManagementClass Win32_SecurityDescriptorHelper
-				$selectarray = @(
-					"Name"
-					@{
-						Name="ComputerName"
-						Expression={$_.SystemName}
+		if ($ComputerName) {
+			write-verbose "Starting Processing loop"
+			foreach ($computer in $ComputerName) {
+				Write-Verbose "Processing $computer"
+				if ($pscmdlet.ShouldProcess($computer)) {
+					if ($PrinterName) {
+						$CIMPrinter = Get-CimInstance -ComputerName $computer Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+					} else {
+						$CIMPrinter = Get-CimInstance  -ComputerName $computer Win32_Printer | Select-Object $selectarray
 					}
-					"ShareName"
-					"PortName"
-					"DriverName"
-					"Location"
-					"Comment"
-					@{
-						Name="SeparatorPageFile"
-						Expression={$_.SeparatorFile}
+					if ($CIMPrinter.local -eq "True") {
+						$Type = "Local"
+					} elseif ($CIMPrinter.Network -eq "True") {
+						$Type = "Connection"
+					} else {
+						$Type = "Unknown"
 					}
-					"PrintProcessor"
-					@{
-						Name="Datatype"
-						Expression={$_.PrintJobDataType}
-					}
-					"Shared"
-					"Published"
-					@{
-						Name="PermissionSDDL"
-						Expression={$sddlconverter.Win32SDToSDDL($_.getsecuritydescriptor().Descriptor).SDDL}
-					}
-					"KeepPrintedJobs"
-					"Priority"
-					@{
-						Name="DefaultJobPriority"
-						Expression={$_.DefaultPriority}
-					}
-					"StartTime"
-					"UntilTime"
-					@{	Name="PrinterStatus"
-						Expression={
-							switch ($_.PrinterStatus) {
-								1 {"Other"}
-								2 {"Unknown"}
-								3 {"Idle"}
-								4 {"Printing"}
-								5 {"Warming up"}
-								6 {"Stopped Printing"}
-								7 {"Offline"}
-								default {"Unknown"}
-							}
-						}
-					}
+					$CIMPrinter
 
-				)
-				if ($PrinterName) {
-					$wmiprinter = Get-WmiObject -ComputerName $computer Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
-				} else {
-					$wmiprinter = Get-WmiObject -ComputerName $computer Win32_Printer | Select-Object $selectarray
 				}
-                if ($wmiprinter.local -eq "True") {
-                    $Type = "Local"
-                } elseif ($wmiprinter.Network -eq "True") {
-                    $Type = "Connection"
-                } else {
-                    $Type = "Unknown"
-                }
-                $wmiprinter
-
 			}
+		} else {
+			write-verbose "No ComputerName, skip Processing loop"
+			if ($PrinterName) {
+				$CIMPrinter = Get-CimInstance Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+			} else {
+				$CIMPrinter = Get-CimInstance Win32_Printer | Select-Object $selectarray
+			}
+			if ($CIMPrinter.local -eq "True") {
+				$Type = "Local"
+			} elseif ($CIMPrinter.Network -eq "True") {
+				$Type = "Connection"
+			} else {
+				$Type = "Unknown"
+			}
+			$CIMPrinter
 		}
 	}
 	end {
 			write-verbose "Ending Something"
 	}
 }
+
