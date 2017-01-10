@@ -6,6 +6,8 @@ function Get-PSPTPrinter {
 	Get-PSPTPrinter -ComputerName ExampleComputer,LocalHost
 	.PARAMETER ComputerName
 	The computer name or array of computers to query, defaults to localhost
+	.PARAMETER PrinterName
+	The name or array of names of printers to filter against, defaults to unfiltered
 	.OUTPUTS
 	Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_Printer without RenderingMode, JobCount, DisableBranchOfficeLogging, or BranchOfficeOfflineLogSizeMB
     .LINK
@@ -23,7 +25,13 @@ function Get-PSPTPrinter {
 		ValueFromPipeline=$True,
 		ValueFromPipelineByPropertyName=$True,
 		Position = 0)]
-		[string[]]$ComputerName = "LocalHost"
+		[string[]]$ComputerName = "LocalHost",
+
+		[Parameter(Mandatory=$False,
+		ValueFromPipeline=$True,
+		ValueFromPipelineByPropertyName=$True,
+		Position = 1)]
+		[string[]]$PrinterName = "LocalHost"
 	)
 
 	begin {
@@ -87,7 +95,11 @@ function Get-PSPTPrinter {
 					}
 
 				)
-				$wmiprinter = Get-WmiObject -ComputerName $computer Win32_Printer | select $selectarray
+				if ($PrinterName) {
+					$wmiprinter = Get-WmiObject -ComputerName $computer Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+				} else {
+					$wmiprinter = Get-WmiObject -ComputerName $computer Win32_Printer | Select-Object $selectarray
+				}
                 if ($wmiprinter.local -eq "True") {
                     $Type = "Local"
                 } elseif ($wmiprinter.Network -eq "True") {
