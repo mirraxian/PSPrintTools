@@ -8,11 +8,13 @@ function Get-PSPTPrinter {
 	The computer name or array of computers to query, defaults to localhost
 	.OUTPUTS
 	Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_Printer without RenderingMode, JobCount, DisableBranchOfficeLogging, or BranchOfficeOfflineLogSizeMB
-	.LINK
-	https://github.com/BenHimsel/PSPrintTools
-	.NOTES
-	Author: Ben Himsel
-	Website: http://himsel.io
+    .LINK
+    https://github.com/BenHimsel/PSPrintTools
+    .LINK
+    https://himsel.io
+    .NOTES
+    Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
+    Author: Ben Himsel
 	#>
 
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
@@ -102,9 +104,3 @@ function Get-PSPTPrinter {
 			write-verbose "Ending Something"
 	}
 }
-<#
-RenderingMode
-JobCount
-DisableBranchOfficeLogging
-BranchOfficeOfflineLogSizeMB
-#>

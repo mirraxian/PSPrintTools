@@ -6,6 +6,13 @@ function Get-PrinterCapabilities {
     Set-PrinterPageSize -PrinterName ExamplePrinter
     .PARAMETER PrinterName
     The printer name or array of printers to change settings on
+    .LINK
+    https://github.com/BenHimsel/PSPrintTools
+    .LINK
+    https://himsel.io
+    .NOTES
+    Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
+    Author: Ben Himsel
     #>
 
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
