@@ -26,6 +26,22 @@ function Set-PSPTPrintConfiguration {
     Sets a value indicating what input bin (paper tray) to use.
     .PARAMETER OutputQuality
     Sets a value indicating the quality of output for the print job.
+    .LINK
+<<<<<<< HEAD
+    https://himsel.io
+    .LINK
+	https://github.com/BenHimsel/PSPrintTools
+	.NOTES
+    Where applicable, set free under the unlicense: http://unlicense.org/ 
+	Author: Ben Himsel
+=======
+    https://github.com/BenHimsel/PSPrintTools
+    .LINK
+    https://himsel.io
+    .NOTES
+    Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
+    Author: Ben Himsel
+>>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
     #>
 
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
@@ -34,6 +50,7 @@ function Set-PSPTPrintConfiguration {
         ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 0)]
+        [alias("Name")]
         [string[]]$PrinterName,
 
         [Parameter(Mandatory=$False,
@@ -110,11 +127,10 @@ function Set-PSPTPrintConfiguration {
     begin {
         Add-Type -AssemblyName System.Printing
         write-verbose "Connecting to Print Server"
-        #Set Perms to a variable to use when constructing instance of PrintServer
+        #Set up Permission variables with appropriate access
         $Permissions = [System.Printing.PrintSystemDesiredAccess]::AdministrateServer
-        #Set Perms to a variable to use when retrieving Queues from PrintServer
         $QueuePerms = [System.Printing.PrintSystemDesiredAccess]::AdministratePrinter
-        #Construct using PrintServer as using LocalPrintServer
+        #Connect to local computer with administrative rights to printers
         $PrintServer = new-object System.Printing.LocalPrintServer -ArgumentList $Permissions
     }
 
