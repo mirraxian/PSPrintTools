@@ -28,6 +28,7 @@ function Set-PSPTPrintConfiguration {
     Sets a value indicating the quality of output for the print job.
     .LINK
 <<<<<<< HEAD
+<<<<<<< HEAD
     https://himsel.io
     .LINK
 	https://github.com/BenHimsel/PSPrintTools
@@ -35,13 +36,18 @@ function Set-PSPTPrintConfiguration {
     Where applicable, set free under the unlicense: http://unlicense.org/ 
 	Author: Ben Himsel
 =======
+=======
+>>>>>>> origin/master
     https://github.com/BenHimsel/PSPrintTools
     .LINK
     https://himsel.io
     .NOTES
     Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
     Author: Ben Himsel
+<<<<<<< HEAD
 >>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
+=======
+>>>>>>> origin/master
     #>
 
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
