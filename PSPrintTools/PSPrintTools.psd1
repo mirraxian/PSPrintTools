@@ -70,6 +70,7 @@ FunctionsToExport = @(
     'Set-PSPTPrintConfiguration'
     'Get-PrinterCapabilities'
     'Get-PSPTPrinter'
+    'New-PrinterPort'
 )
 
 # Cmdlets to export from this module

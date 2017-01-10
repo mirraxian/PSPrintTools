@@ -136,8 +136,10 @@ function Get-PSPTPrinter {
 					}
 					$CIMPrinter
 				}
+			}
 		}
 	}
 	end {
 			write-verbose "Ending Something"
 	}
+}
