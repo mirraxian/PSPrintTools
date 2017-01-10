@@ -10,8 +10,6 @@ function Get-PSPTPrinter {
 	The name or array of names of printers to filter against, defaults to unfiltered
 	.OUTPUTS
 	Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_Printer without RenderingMode, JobCount, DisableBranchOfficeLogging, or BranchOfficeOfflineLogSizeMB
-<<<<<<< HEAD
-<<<<<<< HEAD
 	.LINK
     https://himsel.io
     .LINK
@@ -19,9 +17,6 @@ function Get-PSPTPrinter {
 	.NOTES
     Where applicable, set free under the unlicense: http://unlicense.org/ 
 	Author: Ben Himsel
-=======
-=======
->>>>>>> origin/master
     .LINK
     https://github.com/BenHimsel/PSPrintTools
     .LINK
@@ -29,10 +24,6 @@ function Get-PSPTPrinter {
     .NOTES
     Where applicable, set free under the terms of the Unlicense. http://unlicense.org/
     Author: Ben Himsel
-<<<<<<< HEAD
->>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
-=======
->>>>>>> origin/master
 	#>
 
 	[CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='Low')]
@@ -51,20 +42,10 @@ function Get-PSPTPrinter {
 	)
 
 	begin {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		write-verbose "Beginning Something"
+		write-verbose "Initializing Helpers"
 		#Converter used to change ACL into SDDL
 		$sddlconverter = New-Object System.Management.ManagementClass Win32_SecurityDescriptorHelper
 		#Create an array for Select-Object to Change Win32_Printer output to be similar to MSFT_Printer
-=======
-		write-verbose "Initializing Helpers"
-		$sddlconverter = New-Object System.Management.ManagementClass Win32_SecurityDescriptorHelper
->>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
-=======
-		write-verbose "Initializing Helpers"
-		$sddlconverter = New-Object System.Management.ManagementClass Win32_SecurityDescriptorHelper
->>>>>>> origin/master
 		$selectarray = @(
 			"Name"
 			@{
@@ -123,8 +104,6 @@ function Get-PSPTPrinter {
 			foreach ($computer in $ComputerName) {
 				Write-Verbose "Processing $computer"
 				if ($pscmdlet.ShouldProcess($computer)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 					#add filter if there's a printername
 					if ($PrinterName) {
 						$CIMPrinter = Get-CimInstance -ComputerName $computer -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
@@ -138,13 +117,15 @@ function Get-PSPTPrinter {
 					} else {
 						$Type = "Unknown"
 					}
-=======
-=======
->>>>>>> origin/master
+					$CIMPrinter
+				} else {
+					#add filter if there's a printername
+					write-verbose "No ComputerName, skip Processing loop"
 					if ($PrinterName) {
-						$CIMPrinter = Get-CimInstance -ComputerName $computer Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+						$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
 					} else {
-						$CIMPrinter = Get-CimInstance  -ComputerName $computer Win32_Printer | Select-Object $selectarray
+						$CIMPrinter = Get-CimInstance -ClassName Win32_Printer | Select-Object $selectarray
+
 					}
 					if ($CIMPrinter.local -eq "True") {
 						$Type = "Local"
@@ -153,68 +134,10 @@ function Get-PSPTPrinter {
 					} else {
 						$Type = "Unknown"
 					}
-<<<<<<< HEAD
->>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
-=======
->>>>>>> origin/master
 					$CIMPrinter
-
 				}
-			}
-		} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			#add filter if there's a printername
-			if ($PrinterName) {
-				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
-			} else {
-				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer | Select-Object $selectarray
-=======
-			write-verbose "No ComputerName, skip Processing loop"
-			if ($PrinterName) {
-				$CIMPrinter = Get-CimInstance Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
-			} else {
-				$CIMPrinter = Get-CimInstance Win32_Printer | Select-Object $selectarray
->>>>>>> origin/master
-			}
-			if ($CIMPrinter.local -eq "True") {
-				$Type = "Local"
-			} elseif ($CIMPrinter.Network -eq "True") {
-				$Type = "Connection"
-			} else {
-				$Type = "Unknown"
-			}
-<<<<<<< HEAD
-=======
-			write-verbose "No ComputerName, skip Processing loop"
-			if ($PrinterName) {
-				$CIMPrinter = Get-CimInstance Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
-			} else {
-				$CIMPrinter = Get-CimInstance Win32_Printer | Select-Object $selectarray
-			}
-			if ($CIMPrinter.local -eq "True") {
-				$Type = "Local"
-			} elseif ($CIMPrinter.Network -eq "True") {
-				$Type = "Connection"
-			} else {
-				$Type = "Unknown"
-			}
->>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
-=======
->>>>>>> origin/master
-			$CIMPrinter
 		}
 	}
 	end {
 			write-verbose "Ending Something"
 	}
-<<<<<<< HEAD
-}
-<<<<<<< HEAD
-=======
-}
-
->>>>>>> 0b434753061ad5cd92b6fb959e24a7a249cccbff
-=======
-
->>>>>>> origin/master
