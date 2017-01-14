@@ -35,7 +35,6 @@ function Get-PSPTPrinter {
 		[string[]]$ComputerName,
 
 		[Parameter(Mandatory=$False,
-		ValueFromPipeline=$True,
 		ValueFromPipelineByPropertyName=$True,
 		Position = 1)]
 		[string[]]$PrinterName
@@ -101,14 +100,18 @@ function Get-PSPTPrinter {
 	process {
 		write-verbose "Checking ComputerName"
 		if ($ComputerName) {
-			write-verbose "Starting Processing loop"
+			write-verbose "Starting Computer Processing loop"
 			foreach ($computer in $ComputerName) {
 				Write-Verbose "Processing $computer"
 				if ($pscmdlet.ShouldProcess($computer)) {
 					#add filter if there's a printername
 					if ($PrinterName) {
-						$CIMPrinter = Get-CimInstance -ComputerName $computer -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+						write-verbose "Starting Printer Processing loop"
+						foreach ($Printer in $PrinterName) {
+							$CIMPrinter = Get-CimInstance -ComputerName $computer -ClassName Win32_Printer -Filter "Name like '$Printer'" | Select-Object $selectarray
+						}
 					} else {
+						write-verbose "No PrinterName, skip Processing loop"
 						$CIMPrinter = Get-CimInstance -ComputerName $computer -ClassName Win32_Printer | Select-Object $selectarray
 					}
 					if ($CIMPrinter.local -eq "True") {
@@ -125,8 +128,12 @@ function Get-PSPTPrinter {
 			#add filter if there's a printername
 			write-verbose "No ComputerName, skip Processing loop"
 			if ($PrinterName) {
-				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$PrinterName'" | Select-Object $selectarray
+				write-verbose "Starting Printer Processing loop"
+				foreach ($Printer in $PrinterName) {
+					$CIMPrinter = Get-CimInstance -ClassName Win32_Printer -Filter "Name like '$Printer'" | Select-Object $selectarray
+				}
 			} else {
+				write-verbose "No PrinterName, skip Processing loop"
 				$CIMPrinter = Get-CimInstance -ClassName Win32_Printer | Select-Object $selectarray
 			}
 			if ($CIMPrinter.local -eq "True") {

@@ -3,7 +3,7 @@ function Get-PrinterCapabilities {
     .SYNOPSIS
     Get the capabilities of a print queue such vailable paper sizes, duplexing/color modes
     .EXAMPLE
-    Set-PrinterPageSize -PrinterName ExamplePrinter
+    Get-PrinterCapabilities -PrinterName ExamplePrinter
     .PARAMETER PrinterName
     The printer name or array of printers to change settings on
     .LINK

@@ -3,7 +3,7 @@ function Set-PSPTPrintConfiguration {
     .SYNOPSIS
     Updates the configuration of an existing printer
     .EXAMPLE
-    Set-PSPTPrinter -PrinterName ExamplePrinter -PageSize NorthAmericaLetter
+    Set-PSPTPrintConfiguration -PrinterName ExamplePrinter -PageMediaSize NorthAmericaLetter
     .PARAMETER PrinterName
     The printer name or array of printers to change settings on
     .PARAMETER PageMediaSize
