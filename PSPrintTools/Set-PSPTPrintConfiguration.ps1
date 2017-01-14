@@ -41,74 +41,67 @@ function Set-PSPTPrintConfiguration {
         ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 0)]
-        [alias("Name")]
+        [Alias("Name")]
         [string[]]$PrinterName,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 1)]
         [ValidateSet("NorthAmericaLegal","NorthAmerica11x17","NorthAmericaLetter","ISOA3","ISOA4","ISOA5","JISB4","JISB5","OtherMetricFolio","NorthAmericaNumber9Envelope","NorthAmericaNumber10Envelope","ISODLEnvelope","ISOC5Envelope","ISOC4Envelope","ISOC6Envelope","NorthAmericaMonarchEnvelope","NorthAmericaPersonalEnvelope","NorthAmericaTabloidExtra","ISOA6")]
+        [Alias("PaperSize")]
         [String]$PageMediaSize,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 2)]
         [ValidateSet("Uncollated","Collated")]
         [String]$Collate,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 3)]
         [ValidateSet("Color","Greyscale","Monochrome")]
+        [Alias("Color")]
         [String]$OutputColor,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 4)]
         [ValidateSet("OneSided","TwoSidedLongEdge","TwoSidedShortEdge")]
+        [Alias("DuplexingMode")]
         [String]$Duplexing,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 5)]
         [ValidateSet("None","SaddleStitch","StapleBottomLeft","StapleBottomRight","StapleDualBottom","StapleDualLeft","StapleDualRight","StapleDualTop","StapleTopLeft","StapleTopRight")]
         [String]$Stapling,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 6)]
         [ValidateSet(1,2,4,6,9,16)]
         [Int]$PagesPerSheet,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 7)]
         [ValidateSet("Landscape","Portrait","ReverseLandscape","ReversePortrait")]
         [String]$PageOrientation,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 8)]
         [ValidateSet("Archival","AutoSelect","BackPrintFilm","Bond","CardStock","Continuous","EnvelopePlain","EnvelopeWindow","Fabric","HighResolution","Label","MultiLayerForm","MultiPartForm","None","Photographic","PhotographicFilm","PhotographicGlossy","PhotographicHighGloss","PhotographicMatte","PhotographicSatin","PhotographicSemiGloss","Plain","Screen","ScreenPaged","Stationery","TabStockFull","TabStockPreCut","Transparency","TShirtTransfer")]
         [String]$PageMediaType,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 9)]
         [ValidateSet("AutoSelect","AutoSheetFeeder","Cassette","Manual","Tractor")]
         [Int]$InputBin,
 
         [Parameter(Mandatory=$False,
-        ValueFromPipeline=$True,
         ValueFromPipelineByPropertyName=$True,
         Position = 10)]
         [ValidateSet("Automatic","Draft","Fax","High","Normal","Photographic","Text")]
