@@ -99,7 +99,7 @@ function Set-PSPTPrintConfiguration {
         ValueFromPipelineByPropertyName=$True,
         Position = 9)]
         [ValidateSet("AutoSelect","AutoSheetFeeder","Cassette","Manual","Tractor")]
-        [Int]$InputBin,
+        [String]$InputBin,
 
         [Parameter(Mandatory=$False,
         ValueFromPipelineByPropertyName=$True,
