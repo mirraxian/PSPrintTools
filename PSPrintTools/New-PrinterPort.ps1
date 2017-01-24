@@ -110,70 +110,57 @@ function New-PrinterPort {
 
 	write-verbose "Building command string"
     
+    $props = @{}
     #ComputerName
     if (($ComputerName) -and ($ComputerName -ne "LocalHost") -and ($ComputerName -ne ".") -and ($ComputerName -ne $ENV:COMPUTERNAME)) {
-        $ComputerNameString = ";ComputerName=`"$ComputerName`""
-    } else {
-        $ComputerNameString = ""
+        $props['ComputerName']=$ComputerName
     }
 
     #Name String Mandatory
-    $Name = "Name=`"$Name`""
+    $props['Name']=$Name
 
     #HostAddress String Mandatory
-    $HostAddressString = ";HostAddress=`"$HostAddress`""
+    $props['HostAddress']=$HostAddress
 
     #Caption
     if ($Caption) {
-        $CaptionString = ";Caption=`"$Caption`""
-    } else {
-        $CaptionString = ""
+        $props['Caption']=$Caption
     }
 
     #Description
     if ($Description) {
-        $DescriptionString = ";Description=`"$Description`""
-    } else {
-        $DescriptionString = ""
+        $props['Description']=$Description
     }
 
     #PortNumber has default value
-    $PortNumberString = ";PortNumber=[uint32]$PortNumber"
+    $props['PortNumber']=[uint32]$PortNumber
 
     #Protocol to int
     if ($Protocol -eq "RAW") {
-        $ProtocolString = ";Protocol=[uint32]1"
-    } else {
-        $ProtocolString = ";Protocol=[uint32]1"
+        $props['Protocol']=[uint32]1
     }
 
     #Queue mandatory if using LPR
     if (($Protocol -eq "LPR" ) -and ($null -eq $Queue)) { throw "Queue required with LPR" }
     if ($Queue) {
-        $QueueString = ";Queue=`"$Queue`""
-    } else {
-        $QueueString = ""
+        $props['Queue']=$Queue
     }
 
     #SNMPEnabled
-    $SNMPEnabledString = ";SNMPEnabled=`$$SNMPEnabled"
+    $props['SNMPEnabled']=$SNMPEnabled
 
     #SNMPCommunity has default value
-    $SNMPCommunityString = ";SNMPCommunity=`"$SNMPCommunity`""
+    $props['SNMPCommunity']=$SNMPCommunity
 
     #SNMPDevIndex
     if ($SNMPDevIndexString) {
-         $SNMPDevIndexString = ";SNMPDevIndex=`"$SNMPDevIndex`""
-    } else {
-        $SNMPDevIndexString =  ""
+         $props['SNMPDevIndex']=$SNMPDevIndex
     }
 
 
 	if ($pscmdlet.ShouldProcess($Name)) {
         Write-Verbose "Invoking built command"
-        $portcmd = "New-CimInstance -ClassName Win32_TCPIPPrinterPort -Property @{$Name$ComputerNameString$HostAddressString$CaptionString$DescriptionString$PortNumberString$ProtocolString$QueueString$SNMPEnabledString$SNMPCommunityString$SNMPDevIndexString}"
-        Invoke-Expression $portcmd
-
+        New-CimInstance -ClassName Win32_TCPIPPrinterPort -Property @props
  }
 
 }

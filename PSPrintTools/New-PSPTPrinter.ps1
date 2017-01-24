@@ -1,7 +1,7 @@
-function Set-PSPTPrinter {
+function New-PSPTPrinter {
 	<#
 	.SYNOPSIS
-	Updates the configuration of an existing printer
+	Creates a new printer
 	.EXAMPLE
 	Set-PSPTPrinter 
 	.INPUTS
@@ -179,7 +179,7 @@ function Set-PSPTPrinter {
 				If ($Published) { $PrintQueueAttribInt += 8192 }
 				$PrintQueueAttributes = [System.Printing.PrintQueueAttributes]$PrintQueueAttribInt
 
-				$PrinterServer.InstallPrintQueue($Printer,$DriverName,$PortName,$PrintProcessor,$PrintQueueAttributes,$ShareName,$Comment,$Location,$SeparatorPageFile,$Priority,$DefaultJobPriority)
+				$PrintServer.InstallPrintQueue($Printer,$DriverName,$PortName,$PrintProcessor,$PrintQueueAttributes,$ShareName,$Comment,$Location,$SeparatorPageFile,$Priority,$DefaultJobPriority)
 				
 			}
 		}

@@ -71,16 +71,18 @@ FunctionsToExport = @(
     'Get-PrinterCapabilities'
     'Get-PSPTPrinter'
     'New-PrinterPort'
+    'New-PSPTPrinter'
+    'Get-PSPTPrintConfiguration'
 )
 
 # Cmdlets to export from this module
-CmdletsToExport = '*'
+CmdletsToExport = @()
 
 # Variables to export from this module
-VariablesToExport = '*'
+VariablesToExport = @()
 
 # Aliases to export from this module
-AliasesToExport = '*'
+AliasesToExport = @()
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
