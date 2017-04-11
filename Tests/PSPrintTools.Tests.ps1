@@ -60,14 +60,14 @@ foreach($Function in $FunctionScripts) {
         It "Has a Test in the Tests Folder" {
 
             $Tests.BaseName -contains "$($Function.BaseName).Tests" | Should Be $True 
-            write-host 
+
         }
         
 
         It 'Is exported with the same name as the script' {
 
             $ModuleData.ExportedFunctions.Values.Name -contains $($Function.BaseName) | Should Be $True 
-            write-host $ModuleData.ExportedFunctions.Values.Name
+
         }
 
         It 'Passes the Script Analyzer ' {

@@ -1,8 +1,8 @@
 #Get all script files in project root
-$ScriptFiles  = @( Get-ChildItem -Path $PSScriptRoot\*.ps1 -ErrorAction SilentlyContinue )
+$ScriptFiles = @( Get-ChildItem -Path $PSScriptRoot\*.ps1 -ErrorAction SilentlyContinue )
 
 #Try to dot source all the script files
-Foreach($funct in $ScriptFiles) {
+Foreach ($funct in $ScriptFiles) {
     Try {
         . $funct.fullname
     }
